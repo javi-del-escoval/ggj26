@@ -26,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
 	float timeElapsedOnAbility = 0f;
 
 	//Mask
-	[Header("Mask")]
+	[Header("Mask")]	
+	public SpriteRenderer[] maskSprites;
 	[SerializeField] IntEvent onMaskChanged;
 	[SerializeField] Mask mask;
 	[SerializeField] float maskCooldown = .2f, timeElapsedMaskCooldown = 0f;

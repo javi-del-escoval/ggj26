@@ -1,20 +1,16 @@
 using UnityEngine;
 
-public class Furniture : MonoBehaviour
+public class Furniture : Obstacle
 {
-	[SerializeField] Collider2D _collider;
-
-	private void Start() {
-		_collider = GetComponent<Collider2D>();
-	}
-
 	public void BePhased(bool phase)
 	{
+		wasInteracted = true;
 		_collider.enabled = phase;
 	}
 
 	public void BeDodged(bool dodge)
 	{
+		wasInteracted = true;
 		_collider.enabled = dodge;
 	}
 }
