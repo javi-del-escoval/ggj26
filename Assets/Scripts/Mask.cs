@@ -12,16 +12,16 @@ public class Mask : MonoBehaviour
 		harmonyMask.SetActive(false);
 		switch(maskIndex)
 		{
-			case 1:
+			case 0:
 				agileMask.SetActive(true);
 				break;
-			case 2:
+			case 1:
 				strongMask.SetActive(true);
 				break;
-			case 3:
+			case 2:
 				phaseMask.SetActive(true);
 				break;
-			case 4:
+			case 3:
 				harmonyMask.SetActive(true);
 				break;
 		}

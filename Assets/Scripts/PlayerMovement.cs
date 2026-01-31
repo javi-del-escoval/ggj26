@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 		// Lane
 		if(Vector2.Distance(rb.position, targetPosition) > moveThreshold && moving) {
-			Vector2 newPos = Vector2.MoveTowards(rb.position, targetPosition, speed * Time.fixedDeltaTime);
+			Vector2 newPos = Vector2.MoveTowards(rb.position, targetPosition, speed * 2 * Time.fixedDeltaTime);
 			rb.MovePosition(newPos);
 		}
 		else if(moving) {

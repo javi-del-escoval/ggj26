@@ -13,21 +13,18 @@ public class GameManager : MonoBehaviour
 	public Material backgroundMaterial;
 	public PlayerMovement player;
 	public static GameManager Instance { get; private set; }
-	private void Awake()
-	{
-		if (Instance != null && Instance != this)
-		{
+	private void Awake() {
+		if (Instance != null && Instance != this) {
 			// If an instance already exists and it's not this one, destroy this duplicate
 			Destroy(this.gameObject);
 		}
-		else
-		{
-			// Otherwise, set the instance to this object and ensure it persists across scenes
+		else {
 			Instance = this;
 			DontDestroyOnLoad(this.gameObject);
 		}
 	}
 	private void Start() {
+		speed = 1;
 		comboCounter = 0;
 		comboThreshold = ObstacleSpawner.Instance.cooldown;
 		highScore = PlayerPrefs.GetInt("HighScore", 0); 
@@ -89,7 +86,7 @@ public class GameManager : MonoBehaviour
 				Time.timeScale = 0;
 				if (player)
 				{
-					// 
+					GameUI.Instance.Lose(true);
 				}
 				break;
 		}
