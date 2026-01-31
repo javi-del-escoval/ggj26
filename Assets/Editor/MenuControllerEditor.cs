@@ -15,5 +15,10 @@ public class MenuControllerEditor : Editor
             controller.RefreshPlayHoverFromEditor();
             EditorUtility.SetDirty(controller);
         }
+
+        if (GUILayout.Button("Debug Play Hover"))
+        {
+            controller.DebugPlayHoverSetup();
+        }
     }
 }

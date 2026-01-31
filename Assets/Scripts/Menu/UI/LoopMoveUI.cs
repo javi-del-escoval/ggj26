@@ -8,9 +8,12 @@ public class LoopMoveUI : MonoBehaviour
     public Vector2 to;
     public float moveDuration = 2f;
     public float pauseSeconds = 0f;
+    public float pauseSecondsOnReturn = 0f;
     public bool useUnscaledTime = true;
+    public bool flipXOnReverse = true;
 
     private Coroutine routine;
+    private Vector3 baseScale = Vector3.one;
 
     private void OnEnable()
     {
@@ -33,12 +36,16 @@ public class LoopMoveUI : MonoBehaviour
     {
         if (target == null) target = GetComponent<RectTransform>();
         if (target == null) yield break;
+        baseScale = target.localScale;
 
         while (true)
         {
+            SetScaleFlip(false);
             yield return Move(from, to);
             if (pauseSeconds > 0f) yield return Wait(pauseSeconds);
-            target.anchoredPosition = from;
+            SetScaleFlip(true);
+            yield return Move(to, from);
+            if (pauseSecondsOnReturn > 0f) yield return Wait(pauseSecondsOnReturn);
         }
     }
 
@@ -69,5 +76,14 @@ public class LoopMoveUI : MonoBehaviour
             t += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
             yield return null;
         }
+    }
+
+    private void SetScaleFlip(bool reverse)
+    {
+        if (!flipXOnReverse || target == null) return;
+
+        var scale = baseScale;
+        scale.x = Mathf.Abs(scale.x) * (reverse ? -1f : 1f);
+        target.localScale = scale;
     }
 }
