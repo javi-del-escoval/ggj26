@@ -17,24 +17,21 @@ public class PlayerMovement : MonoBehaviour
 	bool moving = false;
 
 
-	[Header("Jump")]
-	public float jumpForce = 0.5f;
-	[SerializeField] bool isGrounded;
-	[SerializeField] LayerMask whatIsGround;
-	
-	[Header("Slide")]
-	[SerializeField] Collider2D headCollider;
-
-	[Header("Phase")]
-	[SerializeField] float phaseDuration = 1f;
-	[SerializeField] Collider2D feetCollider;
-	bool phasing = false;
-	float timeElapsedPhasing = 0f;
+	[Header("Abilities")]
+	[SerializeField] float abilityDuration = .2f;
+	[SerializeField] BoolEvent onDodge;
+	[SerializeField] BoolEvent onStrike;
+	[SerializeField] BoolEvent onPhase;
+	bool isAbilityActive = false;
+	float timeElapsedOnAbility = 0f;
 
 	//Mask
 	[Header("Mask")]
+	[SerializeField] IntEvent onMaskChanged;
 	[SerializeField] Mask mask;
-	public enum Mask { none, red, blue, yellow, black }
+	[SerializeField] float maskCooldown = .2f, timeElapsedMaskCooldown = 0f;
+	bool canChangeMask = true;
+	enum Mask { agile, strong, phase, harmony }
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
@@ -48,25 +45,12 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 	void FixedUpdate() {
-		// Jump
-		bool wasGrounded = isGrounded;
-		isGrounded = false;
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(ground.position, moveThreshold, whatIsGround);
-		for (int i = 0; i < colliders.Length; i++)
-		{
-			if (colliders[i].gameObject != gameObject)
-			{
-				isGrounded = true;
-			}
-		}
-		// Phase
-		if(phasing) {
-			timeElapsedPhasing += Time.fixedDeltaTime;
-			if(timeElapsedPhasing >= phaseDuration) {
-				phasing = false;
-				timeElapsedPhasing = 0f;
-				headCollider.enabled = true;
-				feetCollider.enabled = true;
+		// Ability
+		if(isAbilityActive) {
+			timeElapsedOnAbility += Time.fixedDeltaTime;
+			if(timeElapsedOnAbility >= abilityDuration) {
+				isAbilityActive = false;
+				timeElapsedOnAbility = 0f;
 			}
 		}
 		// Lane
@@ -78,29 +62,22 @@ public class PlayerMovement : MonoBehaviour
 			moving = false;
 			lanes[laneIndex].gameObject.SetActive(true);
 		}
-	}
-
-	public void Jump(InputAction.CallbackContext callbackContext) {
-		if(callbackContext.performed && (mask == Mask.red || mask == Mask.yellow) && isGrounded){
-			rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        	isGrounded = false;
+		// Mask
+		if(!canChangeMask) {
+			timeElapsedMaskCooldown += Time.fixedDeltaTime;
+			if(timeElapsedMaskCooldown >= maskCooldown) {
+				canChangeMask = true;
+				timeElapsedMaskCooldown = 0f;
+			}
 		}
 	}
-	public void Slide(InputAction.CallbackContext callbackContext) {
-		if(callbackContext.performed && mask == Mask.red){
-			headCollider.enabled = false;
-			Debug.Log("Slide");
-		}
-		else if (callbackContext.canceled) {
-			headCollider.enabled = true;
-		}
-	}
-	public void Phase(InputAction.CallbackContext callbackContext) {
-		if(callbackContext.performed && (mask == Mask.blue || mask == Mask.yellow) && !phasing){
-			Debug.Log("Phase");
-			headCollider.enabled = false;
-			feetCollider.enabled = false;
-			phasing = true;
+	public void Ability(InputAction.CallbackContext callbackContext) {
+		if(callbackContext.performed && !isAbilityActive){
+			Debug.Log("Ability");
+			isAbilityActive = true;
+			if(mask == Mask.agile) { onDodge.Invoke(true); }
+			if(mask == Mask.strong) { onStrike.Invoke(true); }
+			if(mask == Mask.phase) { onPhase.Invoke(true); }
 		}
 	}
 	public void ChangeLane(InputAction.CallbackContext callbackContext) {
@@ -115,23 +92,18 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 	public void ChangeMask(InputAction.CallbackContext callbackContext) {
-		if(callbackContext.performed) {
+		if(callbackContext.performed && canChangeMask) {
 			Vector2 vec = callbackContext.ReadValue<Vector2>();
 			mask = (vec.x, vec.y) switch
 			{
-				(0, 1) => Mask.red, // <-- up
-				(1, 0) => Mask.blue, // <-- right
+				(0, 1)	=> Mask.agile, // <-- up
+				(1, 0)	=> Mask.strong, // <-- right
 				//(0, -1) => Mask.black, // <-- down
-				(-1, 0) => Mask.yellow, // <-- left
-				_      => Mask.none
+				(-1, 0)	=> Mask.phase, // <-- left
+				_		=> 0
 			};
-		}
-	}
-		void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.CompareTag("Ground"))
-		{
-			isGrounded = true;
+			canChangeMask = false;
+			onMaskChanged.Invoke((int)mask);
 		}
 	}
 }
