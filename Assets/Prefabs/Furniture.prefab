@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 1739271589911460495}
   m_Layer: 0
   m_Name: Furniture
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,7 +213,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -241,4 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab799e0d7a2905488f6162fac09e1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Furniture
+  listeners: []
+  onScore: {fileID: 0}
   _collider: {fileID: 6475939542774019114}
