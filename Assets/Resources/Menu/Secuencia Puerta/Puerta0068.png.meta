@@ -103,10 +103,10 @@ TextureImporter:
       name: Puerta0068_0
       rect:
         serializedVersion: 2
-        x: 924
-        y: 151
-        width: 141
-        height: 1617
+        x: 833
+        y: 173
+        width: 211
+        height: 1620
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

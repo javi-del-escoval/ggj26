@@ -36,25 +36,8 @@ public class MenuController : MonoBehaviour
     public Sprite playBaseSprite;
     public Image playButtonImage;
 
-    [Header("Play Hover Camera Zoom")]
-    public bool enablePlayHoverCameraZoom = false;
-    public Camera playHoverCamera;
-    public float playHoverZoomFOV = 35f;
-    public float playHoverZoomDuration = 1.5f;
-    public float playHoverZoomReturnDuration = 1.0f;
-    public bool playHoverZoomUseUnscaledTime = true;
+    [Header("Play Hover Debug")]
     public bool playHoverDebugLogs = false;
-    private float playHoverCameraBaseFOV = -1f;
-    private Coroutine playHoverZoomRoutine;
-
-    [Header("Play Hover Canvas Scale")]
-    public RectTransform playHoverCanvasRoot;
-    public Vector3 playHoverCanvasScale = new Vector3(1.05f, 1.05f, 1f);
-    public float playHoverCanvasScaleDuration = 1.2f;
-    public float playHoverCanvasReturnDuration = 0.9f;
-    public bool playHoverCanvasUseUnscaledTime = true;
-    private Vector3 playHoverCanvasBaseScale = Vector3.one;
-    private Coroutine playHoverCanvasScaleRoutine;
 
     [Header("Scene Names")]
     public string playSceneName = "Game";
@@ -79,7 +62,6 @@ public class MenuController : MonoBehaviour
     {
         AutoLoadPlayHoverFrames();
         InitializePlayHover();
-        CachePlayHoverCanvasBaseScale();
     }
 
     private void Start()
@@ -102,7 +84,6 @@ public class MenuController : MonoBehaviour
             UpdateHighscoreDisplay();
             AutoLoadPlayHoverFrames();
             ApplyButtonLabels();
-            CachePlayHoverCanvasBaseScale();
         }
     }
 
@@ -306,13 +287,6 @@ public class MenuController : MonoBehaviour
         }
         Debug.Log("EventSystem present: " + hasEventSystem);
 
-        Debug.Log("Canvas Scale Target assigned: " + (playHoverCanvasRoot != null));
-        if (playHoverCanvasRoot != null)
-        {
-            Debug.Log("Canvas Base Scale: " + playHoverCanvasBaseScale);
-            Debug.Log("Canvas Target Scale: " + playHoverCanvasScale);
-        }
-
         Debug.Log("Play Hover Debug ----------------");
     }
 
@@ -444,8 +418,6 @@ public class MenuController : MonoBehaviour
         }
 
         playHoverRoutine = StartCoroutine(PlayHoverAnimation());
-        StartPlayHoverZoomIn();
-        StartPlayHoverCanvasScaleIn();
     }
 
     public void StopPlayHoverAnimation()
@@ -459,8 +431,6 @@ public class MenuController : MonoBehaviour
         }
 
         RestorePlayBaseSprite();
-        StartPlayHoverZoomOut();
-        StartPlayHoverCanvasScaleOut();
     }
 
     private IEnumerator PlayHoverAnimation()
@@ -521,134 +491,7 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    private void StartPlayHoverZoomIn()
-    {
-        if (!CanPlayHoverZoom()) return;
-        EnsurePlayHoverCamera();
-        if (playHoverCameraBaseFOV < 0f) playHoverCameraBaseFOV = playHoverCamera.fieldOfView;
-        if (playHoverDebugLogs) Debug.Log("Play hover zoom in: " + playHoverCameraBaseFOV + " -> " + playHoverZoomFOV);
-        StartPlayHoverZoom(playHoverZoomFOV, playHoverZoomDuration);
-    }
-
-    private void StartPlayHoverZoomOut()
-    {
-        if (!CanPlayHoverZoom()) return;
-        EnsurePlayHoverCamera();
-        if (playHoverCameraBaseFOV < 0f) playHoverCameraBaseFOV = playHoverCamera.fieldOfView;
-        if (playHoverDebugLogs) Debug.Log("Play hover zoom out: " + playHoverCamera.fieldOfView + " -> " + playHoverCameraBaseFOV);
-        StartPlayHoverZoom(playHoverCameraBaseFOV, playHoverZoomReturnDuration);
-    }
-
-    private void StartPlayHoverZoom(float targetFOV, float duration)
-    {
-        if (playHoverZoomRoutine != null)
-        {
-            StopCoroutine(playHoverZoomRoutine);
-            playHoverZoomRoutine = null;
-        }
-
-        playHoverZoomRoutine = StartCoroutine(PlayHoverZoomRoutine(targetFOV, duration));
-    }
-
-    private IEnumerator PlayHoverZoomRoutine(float targetFOV, float duration)
-    {
-        if (playHoverCamera == null) yield break;
-
-        float startFOV = playHoverCamera.fieldOfView;
-        float t = 0f;
-        float d = Mathf.Max(0.01f, duration);
-        while (t < d)
-        {
-            t += playHoverZoomUseUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-            float p = Mathf.Clamp01(t / d);
-            playHoverCamera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, p);
-            yield return null;
-        }
-
-        playHoverCamera.fieldOfView = targetFOV;
-        playHoverZoomRoutine = null;
-    }
-
-    private bool CanPlayHoverZoom()
-    {
-        return enablePlayHoverCameraZoom && playHoverCamera != null && playHoverZoomDuration >= 0f && playHoverZoomReturnDuration >= 0f;
-    }
-
-    private void EnsurePlayHoverCamera()
-    {
-        if (playHoverCamera != null) return;
-        playHoverCamera = Camera.main;
-    }
-
-    private void StartPlayHoverCanvasScaleIn()
-    {
-        EnsurePlayHoverCanvasRoot();
-        if (!CanPlayHoverCanvasScale()) return;
-        CachePlayHoverCanvasBaseScale();
-
-        StartPlayHoverCanvasScale(playHoverCanvasScale, playHoverCanvasScaleDuration);
-    }
-
-    private void StartPlayHoverCanvasScaleOut()
-    {
-        EnsurePlayHoverCanvasRoot();
-        if (!CanPlayHoverCanvasScale()) return;
-        CachePlayHoverCanvasBaseScale();
-
-        StartPlayHoverCanvasScale(playHoverCanvasBaseScale, playHoverCanvasReturnDuration);
-    }
-
-    private void StartPlayHoverCanvasScale(Vector3 targetScale, float duration)
-    {
-        if (playHoverCanvasScaleRoutine != null)
-        {
-            StopCoroutine(playHoverCanvasScaleRoutine);
-            playHoverCanvasScaleRoutine = null;
-        }
-
-        playHoverCanvasScaleRoutine = StartCoroutine(PlayHoverCanvasScaleRoutine(targetScale, duration));
-    }
-
-    private IEnumerator PlayHoverCanvasScaleRoutine(Vector3 targetScale, float duration)
-    {
-        if (playHoverCanvasRoot == null) yield break;
-
-        Vector3 startScale = playHoverCanvasRoot.localScale;
-        float t = 0f;
-        float d = Mathf.Max(0.01f, duration);
-        while (t < d)
-        {
-            t += playHoverCanvasUseUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-            float p = Mathf.Clamp01(t / d);
-            playHoverCanvasRoot.localScale = Vector3.LerpUnclamped(startScale, targetScale, p);
-            yield return null;
-        }
-
-        playHoverCanvasRoot.localScale = targetScale;
-        playHoverCanvasScaleRoutine = null;
-    }
-
-    private bool CanPlayHoverCanvasScale()
-    {
-        return playHoverCanvasRoot != null && playHoverCanvasScaleDuration >= 0f && playHoverCanvasReturnDuration >= 0f;
-    }
-
-    private void EnsurePlayHoverCanvasRoot()
-    {
-        if (playHoverCanvasRoot != null) return;
-        var root = GetComponentInParent<Canvas>();
-        if (root != null)
-        {
-            playHoverCanvasRoot = root.GetComponent<RectTransform>();
-            CachePlayHoverCanvasBaseScale();
-        }
-    }
-
-    private void CachePlayHoverCanvasBaseScale()
-    {
-        if (playHoverCanvasRoot == null) return;
-        playHoverCanvasBaseScale = playHoverCanvasRoot.localScale;
-    }
+    // Hover zoom removed; animation-only hover remains.
 
     private void EnsurePlayButtonImage()
     {
