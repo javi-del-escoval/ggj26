@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
 	}
 	private void Update() {
 		runTime += Time.deltaTime;
-		difficulty = runTime * difficultyFactor;
-		speed = 1+difficulty;
+		difficulty = 1 + runTime * difficultyFactor;
+		speed = difficulty;
 		if (backgroundMaterial)
 		{
 			backgroundMaterial.SetVector("Direction",new Vector2(speed/10, 0f));

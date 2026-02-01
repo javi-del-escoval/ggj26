@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 	enum Mask { agile, strong, phase, harmony }
 
 	void Start() {
+		bool isAbilityActive = false;
 		rb = GetComponent<Rigidbody2D>();
 		groundOffset = new Vector2(0f, Vector2.Distance(rb.position, ground.position));
 		laneIndex = 1;
@@ -77,12 +78,15 @@ public class PlayerMovement : MonoBehaviour
 			isAbilityActive = true;
 			if(mask == Mask.agile) {
 				onDodge.Invoke(true);
+				Debug.Log("Dodge");
 			}
 			if(mask == Mask.strong) {
 				onStrike.Invoke(true);
+				Debug.Log("Strike");
 			}
 			if(mask == Mask.phase) {
 				onPhase.Invoke(true);
+				Debug.Log("Phase");
 			}
 		}
 	}

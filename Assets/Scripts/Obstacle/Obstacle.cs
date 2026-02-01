@@ -5,6 +5,7 @@ public class Obstacle : MonoBehaviour
 	[SerializeField] IntEvent onScore;
 	[SerializeField] protected Collider2D _collider;
 	protected bool wasInteracted { get; set; }
+	[field: SerializeField]
 	protected bool isInteractable { get; private set; }
 	
 	private void Start() {
