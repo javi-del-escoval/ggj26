@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] BoolEvent onPhase;
 	bool isAbilityActive = false;
 	float timeElapsedOnAbility = 0f;
+	public Animator playerAnimator;
 
 	//Mask
 	[Header("Mask")]	

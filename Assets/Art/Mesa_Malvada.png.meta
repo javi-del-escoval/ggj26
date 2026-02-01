@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fbd3b41a447b42c49bc7c1ca38672e0d
+guid: 2d8cf0c8f83ccff44bde1a9849c23ccc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8536082155139166029
-    second: estante_0
+      213: -1967880092036403587
+    second: Mesa_Malvada_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: estante_0
+      name: Mesa_Malvada_0
       rect:
         serializedVersion: 2
-        x: 386
-        y: 38
-        width: 283
-        height: 1018
+        x: 59
+        y: 65
+        width: 1017
+        height: 989
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b01169818eb98980800000000000000
-      internalID: -8536082155139166029
+      spriteID: d7e6b998b7fa0b4e0800000000000000
+      internalID: -1967880092036403587
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      estante_0: -8536082155139166029
+      Mesa_Malvada_0: -1967880092036403587
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

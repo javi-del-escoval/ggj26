@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fbd3b41a447b42c49bc7c1ca38672e0d
+guid: 63dfcb483942e434fb3c5ae59bbb6470
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8536082155139166029
-    second: estante_0
+      213: 1723341313529455366
+    second: pilar_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: estante_0
+      name: pilar_0
       rect:
         serializedVersion: 2
-        x: 386
-        y: 38
-        width: 283
-        height: 1018
+        x: 265
+        y: 146
+        width: 527
+        height: 696
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b01169818eb98980800000000000000
-      internalID: -8536082155139166029
+      spriteID: 603ada34bc98ae710800000000000000
+      internalID: 1723341313529455366
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      estante_0: -8536082155139166029
+      pilar_0: 1723341313529455366
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
