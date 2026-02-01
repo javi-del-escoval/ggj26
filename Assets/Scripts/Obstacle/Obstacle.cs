@@ -20,16 +20,16 @@ public class Obstacle : MonoBehaviour
 	}
 
 	public void SetOffLine() {
-		int score = 1+(int)GameManager.Instance.difficulty;
+		int score = 0;
 		if (wasInteracted) {
-			score *= 2;
+			score = (1+(int)GameManager.Instance.difficulty)*2;
 			GameManager.Instance.ComboInteraction();
+			if (GameManager.Instance.comboCounter > 0)
+			{
+				score *= GameManager.Instance.comboCounter;
+			}
+			onScore.Invoke(score);
 		}
-		if (GameManager.Instance.comboCounter > 0)
-		{
-			score *= GameManager.Instance.comboCounter;
-		}
-		onScore.Invoke(score);
 	}
 	
 }
