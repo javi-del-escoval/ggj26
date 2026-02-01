@@ -140,6 +140,13 @@ public class LoopMoveUI : MonoBehaviour
             yield return MoveAbsolute(to, from, token);
             if (verboseLogs) LogStageEnd("Move B->A");
             SetScaleFlip(false);
+
+            if (pauseSeconds > 0f)
+            {
+                if (verboseLogs) LogStageStart("Pause", pauseSeconds);
+                yield return WaitAbsolute(pauseSeconds, token);
+                if (verboseLogs) LogStageEnd("Pause");
+            }
         }
 
         isRunning = false;
