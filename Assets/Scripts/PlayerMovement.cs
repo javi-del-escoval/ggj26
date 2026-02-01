@@ -73,12 +73,17 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 	public void Ability(InputAction.CallbackContext callbackContext) {
-		if(callbackContext.performed && !isAbilityActive){
-			Debug.Log("Ability");
+		if(callbackContext.performed && !isAbilityActive) {
 			isAbilityActive = true;
-			if(mask == Mask.agile) { onDodge.Invoke(true); }
-			if(mask == Mask.strong) { onStrike.Invoke(true); }
-			if(mask == Mask.phase) { onPhase.Invoke(true); }
+			if(mask == Mask.agile) {
+				onDodge.Invoke(true);
+			}
+			if(mask == Mask.strong) {
+				onStrike.Invoke(true);
+			}
+			if(mask == Mask.phase) {
+				onPhase.Invoke(true);
+			}
 		}
 	}
 	public void ChangeLane(InputAction.CallbackContext callbackContext) {

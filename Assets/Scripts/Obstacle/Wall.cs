@@ -6,7 +6,8 @@ public class Wall : Obstacle
 	{
 		if(destroy) {
 			wasInteracted = true;
-			//play dead
+			_collider.enabled = false;
+			Debug.Log($"rammed {gameObject.name}");
 		}
 	}
 	public void BePhased(bool phase)

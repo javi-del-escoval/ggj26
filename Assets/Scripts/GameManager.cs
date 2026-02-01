@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 	float comboThreshold, timeSinceLastComboInteraction = 0f;
 	bool wasInteracted;
 	public float speed { get; private set; }
-	public float difficulty=1, difficultyFactor=1/6000, runTime = 0;
+	public float difficulty=1, difficultyFactor=1/60000, runTime = 0;
 	public Material backgroundMaterial;
 	public PlayerMovement player;
 	public static GameManager Instance { get; private set; }

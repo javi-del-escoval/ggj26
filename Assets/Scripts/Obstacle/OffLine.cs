@@ -8,14 +8,13 @@ public class OffLine : MonoBehaviour
 			Obstacle obs = other.transform.parent.gameObject.GetComponent<Obstacle>();
 			if (obs) {
 				obs.SetOffLine(true);
-				Debug.Log($"offline {obs.gameObject.name}");
 			}
 		}
 	}
 
 	private void OnTriggerExit2D(Collider2D other) {
 		if (other.CompareTag("Obstacle")) {
-			ObstacleSpawner.Instance.RemoveObstacle(other.transform.parent.gameObject);
+			ObstacleSpawner.Instance.RemoveObstacle(other.gameObject);
 		}
 	}
 }

@@ -6,13 +6,14 @@ public class Obstacle : MonoBehaviour
 	[SerializeField] IntEvent onScore;
 	[SerializeField] protected Collider2D _collider;
 	protected bool wasInteracted { get; set; }
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
+	
 	private void Start() {
 		_collider = GetComponent<Collider2D>();
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.CompareTag("Player")) {
+			Debug.Log("Lose");
 			GameManager.Instance.SetGameState(GameManager.GameState.lose);
 		}
 	}

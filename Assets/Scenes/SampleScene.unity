@@ -1462,7 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504745c399c06e741bbfbe79db2f36e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OffLine
-  onScore: {fileID: 0}
+  onScore: {fileID: 11400000, guid: ca3428b74d52bb24ca72397c8acacdd3, type: 2}
 --- !u!1 &1222167554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,6 +1711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   enemyVariants:
   - {fileID: 8332426588654888630, guid: 30a25de9a11090141a937acbd6a22749, type: 3}
+  - {fileID: 1704879826889660513, guid: 60b031a89758d814f86b14c3511e0edd, type: 3}
   wallVariants:
   - {fileID: 2788015202587725370, guid: 5b1eab74f2747824b8ae685fba5ab8b9, type: 3}
   FurnitureVariants:
