@@ -190,7 +190,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.8, y: 1.57}
+  m_Size: {x: 1.5, y: 1.57}
   m_EdgeRadius: 0
 --- !u!1 &8332426588654888630
 GameObject:
@@ -284,7 +284,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!61 &5003207485752206543
 BoxCollider2D:
@@ -346,6 +346,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   onScore: {fileID: 11400000, guid: ca3428b74d52bb24ca72397c8acacdd3, type: 2}
   _collider: {fileID: 2053026689425202011}
+  _sprite: {fileID: 2732974514425664441}
+  <isInteractable>k__BackingField: 0
 --- !u!50 &8838215171119624671
 Rigidbody2D:
   serializedVersion: 5

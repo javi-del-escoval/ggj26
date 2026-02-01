@@ -7,7 +7,7 @@ public class OffLine : MonoBehaviour
 		if (other.CompareTag("Obstacle")) {
 			Obstacle obs = other.transform.parent.gameObject.GetComponent<Obstacle>();
 			if (obs) {
-				obs.SetOffLine(true);
+				obs.SetOffLine();
 			}
 		}
 	}

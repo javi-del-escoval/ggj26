@@ -2,19 +2,23 @@ using UnityEngine;
 
 public class Enemy : Obstacle
 {
-	public void TakeDamage(bool destroy)
+	public void TakeDamage(bool strike)
 	{
-		if(destroy && isInteractable) {
+		Debug.Log($"Destroy {strike} & isInteractable {isInteractable}");
+		if(strike && isInteractable) {
+			Debug.Log($"Striked {gameObject.name}");
 			wasInteracted = true;
 			_collider.enabled = false;
-			Debug.Log($"rammed {gameObject.name}");
+			_sprite.color = Color.red;
+			_sprite.flipY = true;
 		}
 	}
 	public void BeDodged(bool dodge)
 	{
 		if(isInteractable){
 			wasInteracted = true;
-			_collider.enabled = dodge;
+			_collider.enabled = false;
+			_sprite.flipX = true;
 		}
 	}
 }

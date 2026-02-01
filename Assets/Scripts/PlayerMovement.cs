@@ -78,15 +78,15 @@ public class PlayerMovement : MonoBehaviour
 			isAbilityActive = true;
 			if(mask == Mask.agile) {
 				onDodge.Invoke(true);
-				Debug.Log("Dodge");
+				//Debug.Log("Dodge");
 			}
 			if(mask == Mask.strong) {
 				onStrike.Invoke(true);
-				Debug.Log("Strike");
+				//Debug.Log("Strike");
 			}
 			if(mask == Mask.phase) {
 				onPhase.Invoke(true);
-				Debug.Log("Phase");
+				//Debug.Log("Phase");
 			}
 		}
 	}

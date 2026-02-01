@@ -85,8 +85,7 @@ public class GameManager : MonoBehaviour
 				break;
 			case GameState.lose:
 				Time.timeScale = 0;
-				if (player)
-				{
+				if (player) {
 					GameUI.Instance.Lose(true);
 				}
 				break;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6499740813819255169}
   - component: {fileID: 8133051590011135886}
   - component: {fileID: 4220535278167009573}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Agile Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1926191404682207454}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,9 +256,9 @@ GameObject:
   - component: {fileID: 3350978149182269773}
   - component: {fileID: 2575357523486007251}
   - component: {fileID: 8332409473859417596}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
   onPhase: {fileID: 11400000, guid: fe19de75b176af0489a3ed15314a76e0, type: 2}
   maskSprites: []
   onMaskChanged: {fileID: 11400000, guid: 0fba554877c8c10469eeb24563fc40d4, type: 2}
-  mask: 0
+  mask: 2
   maskCooldown: 0.2
   timeElapsedMaskCooldown: 0
 --- !u!50 &3350978149182269773
@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 1201931758382671051}
   - component: {fileID: 1693312450699830426}
   - component: {fileID: 3246947045510500084}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -583,7 +583,7 @@ GameObject:
   - component: {fileID: 1919256383458840624}
   - component: {fileID: 4345632004655647961}
   - component: {fileID: 5532865207195941975}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Strong Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6596348740919056976}
   - component: {fileID: 3313717785771581310}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Harmony Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -886,7 +886,7 @@ GameObject:
   - component: {fileID: 352638060272410903}
   - component: {fileID: 2316103553462034263}
   - component: {fileID: 2871335484276017760}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Phase Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}

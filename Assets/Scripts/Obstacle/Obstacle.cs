@@ -4,17 +4,13 @@ public class Obstacle : MonoBehaviour
 {
 	[SerializeField] IntEvent onScore;
 	[SerializeField] protected Collider2D _collider;
+	public SpriteRenderer _sprite;
 	protected bool wasInteracted { get; set; }
 	[field: SerializeField]
 	protected bool isInteractable { get; private set; }
 	
-	private void Start() {
-		_collider = GetComponent<Collider2D>();
-	}
-
 	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.CompareTag("Player")) {
-			Debug.Log("Lose");
+		if (other.CompareTag("Player") && !wasInteracted) {
 			GameManager.Instance.SetGameState(GameManager.GameState.lose);
 		}
 	}
@@ -23,7 +19,7 @@ public class Obstacle : MonoBehaviour
 		isInteractable = frontLine;
 	}
 
-	public void SetOffLine(bool offLine) {
+	public void SetOffLine() {
 		int score = 1+(int)GameManager.Instance.difficulty;
 		if (wasInteracted) {
 			score *= 2;

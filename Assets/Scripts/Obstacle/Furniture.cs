@@ -6,7 +6,8 @@ public class Furniture : Obstacle
 	{
 		if(isInteractable){
 			wasInteracted = true;
-			_collider.enabled = phase;
+			_collider.enabled = false;
+			_sprite.color = new Color(1f,1f,1f,0.5f);
 		}
 	}
 
@@ -14,7 +15,7 @@ public class Furniture : Obstacle
 	{
 		if(isInteractable){
 			wasInteracted = true;
-			_collider.enabled = dodge;
+			_collider.enabled = false;
 		}
 	}
 }

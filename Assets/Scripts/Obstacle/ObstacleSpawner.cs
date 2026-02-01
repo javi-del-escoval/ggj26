@@ -7,6 +7,7 @@ public class ObstacleSpawner : MonoBehaviour
 	public GameObject[] enemyVariants, wallVariants, FurnitureVariants;
 	private List<GameObject> obstacles;
 	[SerializeField] Transform[] lanes;
+	public float cooldownFactor = 4;
 	public float cooldown { get; private set; }
 	float timeElapsed;
 	public static ObstacleSpawner Instance { get; private set; }
@@ -27,17 +28,18 @@ public class ObstacleSpawner : MonoBehaviour
 	void Start()
 	{
 		obstacles = new List<GameObject>();
-		cooldown = 4/GameManager.Instance.difficulty;
+		cooldown = cooldownFactor/GameManager.Instance.difficulty;
+		timeElapsed = cooldown;
 	}
 
 	void Update()
 	{
-		int laneIndex = Random.Range(0, lanes.Length);
 		timeElapsed += Time.deltaTime;
 		if(timeElapsed >= cooldown)
 		{
+			int laneIndex = Random.Range(0, lanes.Length);
 			timeElapsed = 0;
-			cooldown = 4/GameManager.Instance.difficulty;
+			cooldown = cooldownFactor/GameManager.Instance.difficulty;
 			//spawn
 			int typeIndex = Random.Range(0, 3);
 			GameObject[] type;
@@ -62,12 +64,12 @@ public class ObstacleSpawner : MonoBehaviour
 			Vector2 pos;
 			if (cluster == 0)
 			{
-				pos = (Vector2)lanes[laneIndex].position + new Vector2(14,0);
+				pos = (Vector2)lanes[laneIndex].position + new Vector2(21,0);
 				obstacles.Add(Instantiate(type[variantIndex], pos, Quaternion.identity, transform));
-				pos = (Vector2)lanes[laneIndex].position + new Vector2(16,0);
+				pos = (Vector2)lanes[laneIndex].position + new Vector2(23,0);
 				obstacles.Add(Instantiate(type[variantIndex], pos, Quaternion.identity, transform));
 			}
-			pos = (Vector2)lanes[laneIndex].position + new Vector2(12,0);
+			pos = (Vector2)lanes[laneIndex].position + new Vector2(19,0);
 			obstacles.Add(Instantiate(type[variantIndex], pos, Quaternion.identity, transform));
 		}
 		foreach(GameObject obj in obstacles)
