@@ -39,6 +39,10 @@ public class MenuController : MonoBehaviour
     [Header("Play Hover Debug")]
     public bool playHoverDebugLogs = false;
 
+    [Header("Loading Overlay")]
+    public GameObject loadingOverlay;
+    public float loadingDuration = 2f;
+
     [Header("Scene Names")]
     public string playSceneName = "Game";
 
@@ -58,6 +62,9 @@ public class MenuController : MonoBehaviour
     public string highscoreLabel = "Highscore: ";
     public Text highscoreText;
 
+    private Coroutine loadingRoutine;
+    private bool isLoading;
+
     private void Awake()
     {
         AutoLoadPlayHoverFrames();
@@ -72,6 +79,7 @@ public class MenuController : MonoBehaviour
         ApplyButtonEnabled();
         ApplyBackground();
         UpdateHighscoreDisplay();
+        SetLoadingOverlayActive(false);
         if (applyFontOnStart) ApplyFonts();
     }
 
@@ -92,7 +100,7 @@ public class MenuController : MonoBehaviour
         switch (action)
         {
             case MenuAction.Play:
-                LoadScene(playSceneName, "Play");
+                BeginPlayLoading();
                 break;
             case MenuAction.Quit:
                 QuitGame();
@@ -122,6 +130,7 @@ public class MenuController : MonoBehaviour
     public void UpdateHighscoreDisplay()
     {
         if (highscoreText == null) return;
+        highscoreValue = PlayerPrefs.GetInt("HighScore", 0);
         highscoreText.text = highscoreLabel + highscoreValue;
     }
 
@@ -183,6 +192,21 @@ public class MenuController : MonoBehaviour
             cg.alpha = enabled ? 1f : 0f;
             cg.interactable = enabled;
             cg.blocksRaycasts = enabled;
+        }
+    }
+
+    private static void SetButtonInteractable(MenuButton menuButton, bool interactable)
+    {
+        if (menuButton == null) return;
+
+        var btn = menuButton.GetComponent<Button>();
+        if (btn != null) btn.interactable = interactable;
+
+        var cg = menuButton.GetComponent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.interactable = interactable;
+            cg.blocksRaycasts = interactable;
         }
     }
 
@@ -407,7 +431,7 @@ public class MenuController : MonoBehaviour
 
     public void StartPlayHoverAnimation()
     {
-        if (!CanPlayHover()) return;
+        if (isLoading || !CanPlayHover()) return;
 
         isPlayHovered = true;
         if (playHoverDebugLogs) Debug.Log("Play hover enter");
@@ -433,22 +457,72 @@ public class MenuController : MonoBehaviour
         RestorePlayBaseSprite();
     }
 
+    private void BeginPlayLoading()
+    {
+        if (isLoading) return;
+        if (!playEnabled) return;
+
+        isLoading = true;
+        StopPlayHoverAnimation();
+        SetButtonInteractable(playButton, false);
+        SetButtonInteractable(quitButton, false);
+        SetLoadingOverlayActive(true);
+
+        if (loadingRoutine != null)
+        {
+            StopCoroutine(loadingRoutine);
+        }
+
+        loadingRoutine = StartCoroutine(LoadAfterDelay());
+    }
+
+    private IEnumerator LoadAfterDelay()
+    {
+        float waitTime = Mathf.Max(0f, loadingDuration);
+        if (waitTime > 0f)
+        {
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        LoadScene(playSceneName, "Play");
+    }
+
+    private void SetLoadingOverlayActive(bool active)
+    {
+        if (loadingOverlay != null && loadingOverlay.activeSelf != active)
+        {
+            loadingOverlay.SetActive(active);
+        }
+    }
+
     private IEnumerator PlayHoverAnimation()
     {
-        while (isPlayHovered && IsPlayInteractable())
+        for (int i = 0; i < playHoverFrames.Length; i++)
         {
-            for (int i = 0; i < playHoverFrames.Length; i++)
+            if (!isPlayHovered || !IsPlayInteractable()) break;
+
+            EnsurePlayButtonImage();
+            var frame = playHoverFrames[i];
+            if (frame != null && playButtonImage != null)
             {
-                if (!isPlayHovered || !IsPlayInteractable()) break;
+                playButtonImage.sprite = frame;
+            }
 
-                EnsurePlayButtonImage();
-                var frame = playHoverFrames[i];
-                if (frame != null && playButtonImage != null)
-                {
-                    playButtonImage.sprite = frame;
-                }
+            yield return new WaitForSeconds(1f / playHoverFPS);
+        }
 
-                yield return new WaitForSeconds(1f / playHoverFPS);
+        if (isPlayHovered && IsPlayInteractable())
+        {
+            EnsurePlayButtonImage();
+            var lastFrame = playHoverFrames[playHoverFrames.Length - 1];
+            if (lastFrame != null && playButtonImage != null)
+            {
+                playButtonImage.sprite = lastFrame;
+            }
+
+            while (isPlayHovered && IsPlayInteractable())
+            {
+                yield return null;
             }
         }
 
