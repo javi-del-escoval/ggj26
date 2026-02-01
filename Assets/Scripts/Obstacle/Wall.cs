@@ -4,7 +4,7 @@ public class Wall : Obstacle
 {
 	public void TakeDamage(bool destroy)
 	{
-		if(destroy) {
+		if(destroy && isInteractable) {
 			wasInteracted = true;
 			_collider.enabled = false;
 			Debug.Log($"rammed {gameObject.name}");
@@ -12,7 +12,10 @@ public class Wall : Obstacle
 	}
 	public void BePhased(bool phase)
 	{
-		wasInteracted = true;
-		_collider.enabled = phase;
+		if(isInteractable)
+		{
+			wasInteracted = true;
+			_collider.enabled = phase;
+		}
 	}
 }

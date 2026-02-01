@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-	[SerializeField] BoolEventListener[] listeners;
 	[SerializeField] IntEvent onScore;
 	[SerializeField] protected Collider2D _collider;
 	protected bool wasInteracted { get; set; }
+	protected bool isInteractable { get; private set; }
 	
 	private void Start() {
 		_collider = GetComponent<Collider2D>();
@@ -19,25 +19,20 @@ public class Obstacle : MonoBehaviour
 	}
 
 	public void SetFrontLine(bool frontLine) {
-		foreach(BoolEventListener listener in listeners) {
-			listener.enabled = frontLine;
-		}
+		isInteractable = frontLine;
 	}
 
 	public void SetOffLine(bool offLine) {
-		foreach(BoolEventListener listener in listeners) {
-			listener.enabled = offLine;
-			int score = 1+(int)GameManager.Instance.difficulty;
-			if (wasInteracted) {
-				score *= 2;
-				GameManager.Instance.ComboInteraction();
-			}
-			if (GameManager.Instance.comboCounter > 0)
-			{
-				score *= GameManager.Instance.comboCounter;
-			}
-			onScore.Invoke(score);
+		int score = 1+(int)GameManager.Instance.difficulty;
+		if (wasInteracted) {
+			score *= 2;
+			GameManager.Instance.ComboInteraction();
 		}
+		if (GameManager.Instance.comboCounter > 0)
+		{
+			score *= GameManager.Instance.comboCounter;
+		}
+		onScore.Invoke(score);
 	}
 	
 }

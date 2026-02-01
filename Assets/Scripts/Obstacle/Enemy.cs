@@ -4,14 +4,17 @@ public class Enemy : Obstacle
 {
 	public void TakeDamage(bool destroy)
 	{
-		if(destroy) {
+		if(destroy && isInteractable) {
 			wasInteracted = true;
-			//play dead
+			_collider.enabled = false;
+			Debug.Log($"rammed {gameObject.name}");
 		}
 	}
 	public void BeDodged(bool dodge)
 	{
-		wasInteracted = true;
-		_collider.enabled = dodge;
+		if(isInteractable){
+			wasInteracted = true;
+			_collider.enabled = dodge;
+		}
 	}
 }

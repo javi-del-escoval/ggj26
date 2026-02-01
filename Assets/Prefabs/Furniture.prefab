@@ -214,7 +214,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8091219625406953338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8de7ae957dd7a5d4ba0d9f57753487f1, type: 3}
   m_Name: 
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8091219625406953338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8de7ae957dd7a5d4ba0d9f57753487f1, type: 3}
   m_Name: 
@@ -321,9 +321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab799e0d7a2905488f6162fac09e1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Furniture
-  listeners:
-  - {fileID: 122475974989792749}
-  - {fileID: 3129023957775684486}
   onScore: {fileID: 11400000, guid: ca3428b74d52bb24ca72397c8acacdd3, type: 2}
   _collider: {fileID: 7575926359559653293}
 --- !u!50 &5845202027887407848

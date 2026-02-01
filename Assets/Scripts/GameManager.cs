@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
 	public int comboCounter { get; private set; }
 	float comboThreshold, timeSinceLastComboInteraction = 0f;
 	bool wasInteracted;
+	[field: SerializeField]
 	public float speed { get; private set; }
-	public float difficulty=1, difficultyFactor=1/60000, runTime = 0;
+	public float difficulty=1, difficultyFactor, runTime = 0;
 	public Material backgroundMaterial;
 	public PlayerMovement player;
 	public static GameManager Instance { get; private set; }
@@ -30,9 +31,9 @@ public class GameManager : MonoBehaviour
 		highScore = PlayerPrefs.GetInt("HighScore", 0); 
 	}
 	private void Update() {
-		difficulty += Time.deltaTime * difficultyFactor;
-		speed += difficulty/600;
 		runTime += Time.deltaTime;
+		difficulty = runTime * difficultyFactor;
+		speed = 1+difficulty;
 		if (backgroundMaterial)
 		{
 			backgroundMaterial.SetVector("Direction",new Vector2(speed/10, 0f));

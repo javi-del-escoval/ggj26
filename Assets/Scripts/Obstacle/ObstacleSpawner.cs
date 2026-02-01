@@ -58,7 +58,16 @@ public class ObstacleSpawner : MonoBehaviour
 					break;
 			}
 			int variantIndex = Random.Range(0, type.Length);
-			Vector2 pos = (Vector2)lanes[laneIndex].position + new Vector2(12,0);
+			int cluster = Random.Range(0, 9);
+			Vector2 pos;
+			if (cluster == 0)
+			{
+				pos = (Vector2)lanes[laneIndex].position + new Vector2(14,0);
+				obstacles.Add(Instantiate(type[variantIndex], pos, Quaternion.identity, transform));
+				pos = (Vector2)lanes[laneIndex].position + new Vector2(16,0);
+				obstacles.Add(Instantiate(type[variantIndex], pos, Quaternion.identity, transform));
+			}
+			pos = (Vector2)lanes[laneIndex].position + new Vector2(12,0);
 			obstacles.Add(Instantiate(type[variantIndex], pos, Quaternion.identity, transform));
 		}
 		foreach(GameObject obj in obstacles)
